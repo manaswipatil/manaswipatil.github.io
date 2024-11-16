@@ -172,7 +172,7 @@ collections:
     sort_by: order
   projects:
     output: true
-    permalink: /posts/:title/
+    permalink: /projects/:title/
 
 defaults:
   - scope:
