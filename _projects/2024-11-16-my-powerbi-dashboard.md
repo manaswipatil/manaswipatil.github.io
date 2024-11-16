@@ -1,6 +1,5 @@
 ---
-layout: posts
-title: 'My PowerBI Dashboard'
+title: My PowerBI Dashboard
 date: 2024-11-16
 ---
 
