@@ -37,7 +37,8 @@ layout: default
             <h1 class="card-title my-2 mt-md-0">{{ projects.title }}</h1>
 
             <div class="card-text content mt-0 mb-3">
-              <p>{% include projects-description.html %}</p>
+              <p>{% include no-linenos.html content=post.content %}
+                {{ content | markdownify | strip_html | truncate: 200 | escape }}</p>
             </div>
 
             <div class="projects-meta flex-grow-1 d-flex align-items-end">
@@ -74,7 +75,3 @@ layout: default
   {% endfor %}
 </div>
 <!-- #projects-list -->
-
-{% if paginator.total_pages > 1 %}
-  {% include projects-paginator.html %}
-{% endif %}
