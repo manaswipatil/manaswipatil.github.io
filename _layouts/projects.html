@@ -1,52 +1,80 @@
 ---
 layout: default
-title: Projects
-permalink: /projects/
 ---
 
-<div class="page-title">
-  <h1>{{ page.title }}</h1>
-</div>
+{% include lang.html %}
 
-<!-- Start project list container -->
-<div class="post-list flex-grow-1 px-xl-5">
-  {% for project in site.projects %}
-    <article class="card-wrapper mb-4">
-      <a href="{{ project.url | relative_url }}" class="card project-preview row g-0">
-        
-        <!-- Display project image if it exists -->
-        {% if project.image %}
-          <div class="col-md-4">
-            <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="img-fluid">
+
+<div id="post-list" class="flex-grow-1 px-xl-1">
+  {% for projects in site.projects %}
+    <article class="card-wrapper card">
+      <a href="{{ projects.url | relative_url }}" class="post-preview row g-0 flex-md-row-reverse">
+        {% assign card_body_col = '12' %}
+
+        {% if projects.image %}
+          {% assign src = projects.image.path | default: projects.image %}
+          {% unless src contains '//' %}
+            {% assign src = projects.media_subpath | append: '/' | append: src | replace: '//', '/' %}
+          {% endunless %}
+
+          {% assign alt = projects.image.alt | xml_escape | default: 'Preview Image' %}
+
+          {% assign lqip = null %}
+
+          {% if projects.image.lqip %}
+            {% capture lqip %}lqip="{{ projects.image.lqip }}"{% endcapture %}
+          {% endif %}
+
+          <div class="col-md-5">
+            <img src="{{ src }}" alt="{{ alt }}" {{ lqip }}>
           </div>
-          {% assign card_body_col = '8' %}
-        {% else %}
-          {% assign card_body_col = '12' %}
+
+          {% assign card_body_col = '7' %}
         {% endif %}
 
-        <!-- Card body content: title, excerpt, metadata -->
         <div class="col-md-{{ card_body_col }}">
-          <div class="card-body">
-            <h2 class="card-title">{{ project.title }}</h2>
-            <p class="card-text">{{ project.excerpt | strip_html | truncate: 160 }}</p>
-            
-            <!-- Metadata (Date and Categories) -->
-            <div class="post-meta mt-2">
-              <span class="date"><i class="far fa-calendar-alt me-1"></i>{{ project.date | date: "%B %d, %Y" }}</span>
-              {% if project.categories %}
-                <span class="categories ms-3">
-                  <i class="far fa-folder-open me-1"></i>
-                  {% for category in project.categories %}
-                    {{ category }}
-                    {% unless forloop.last %}, {% endunless %}
-                  {% endfor %}
-                </span>
+          <div class="card-body d-flex flex-column">
+            <h1 class="card-title my-2 mt-md-0">{{ projects.title }}</h1>
+
+            <div class="card-text content mt-0 mb-3">
+              <p>{% include projects-description.html %}</p>
+            </div>
+
+            <div class="projects-meta flex-grow-1 d-flex align-items-end">
+              <div class="me-auto">
+                <!-- posted date -->
+                <i class="far fa-calendar fa-fw me-1"></i>
+                {% include datetime.html date=projects.date lang=lang %}
+
+                <!-- categories -->
+                {% if projects.categories.size > 0 %}
+                  <i class="far fa-folder-open fa-fw me-1"></i>
+                  <span class="categories">
+                    {% for category in projects.categories %}
+                      {{ category }}
+                      {%- unless forloop.last -%},{%- endunless -%}
+                    {% endfor %}
+                  </span>
+                {% endif %}
+              </div>
+
+              {% if projects.pin %}
+                <div class="pin ms-1">
+                  <i class="fas fa-thumbtack fa-fw"></i>
+                  <span>{{ site.data.locales[lang].projects.pin_prompt }}</span>
+                </div>
               {% endif %}
             </div>
+            <!-- .projects-meta -->
           </div>
+          <!-- .card-body -->
         </div>
       </a>
     </article>
   {% endfor %}
 </div>
-<!-- End project list container -->
+<!-- #projects-list -->
+
+{% if paginator.total_pages > 1 %}
+  {% include projects-paginator.html %}
+{% endif %}
