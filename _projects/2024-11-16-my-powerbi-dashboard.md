@@ -1,6 +1,9 @@
 ---
-title: My PowerBI Dashboard
-date: 2024-11-16
+layout: post
+title: "Sample Project 1"
+date: 2024-01-15
+categories: [Projects]
+image: "/assets/images/project1.jpg"
+excerpt: "An overview of Sample Project 1, demonstrating various features and functionalities."
 ---
-
-## This is a test for project post.
+Project content goes here.

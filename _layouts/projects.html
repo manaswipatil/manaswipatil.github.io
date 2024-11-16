@@ -8,24 +8,29 @@ permalink: /projects/
   <h1>{{ page.title }}</h1>
 </div>
 
+<!-- Start project list container -->
 <div class="post-list flex-grow-1 px-xl-5">
   {% for project in site.projects %}
     <article class="card-wrapper mb-4">
-      <a href="{{ project.url | relative_url }}" class="card-preview row g-0">
-        {% assign card_body_col = '12' %}
-
+      <a href="{{ project.url | relative_url }}" class="card project-preview row g-0">
+        
+        <!-- Display project image if it exists -->
         {% if project.image %}
           <div class="col-md-4">
             <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="img-fluid">
           </div>
           {% assign card_body_col = '8' %}
+        {% else %}
+          {% assign card_body_col = '12' %}
         {% endif %}
 
+        <!-- Card body content: title, excerpt, metadata -->
         <div class="col-md-{{ card_body_col }}">
           <div class="card-body">
             <h2 class="card-title">{{ project.title }}</h2>
             <p class="card-text">{{ project.excerpt | strip_html | truncate: 160 }}</p>
-
+            
+            <!-- Metadata (Date and Categories) -->
             <div class="post-meta mt-2">
               <span class="date"><i class="far fa-calendar-alt me-1"></i>{{ project.date | date: "%B %d, %Y" }}</span>
               {% if project.categories %}
@@ -44,3 +49,4 @@ permalink: /projects/
     </article>
   {% endfor %}
 </div>
+<!-- End project list container -->
