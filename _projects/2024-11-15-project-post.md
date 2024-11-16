@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: project-post
 title: Project Post
 date: 2024-11-15
 ---
